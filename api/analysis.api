@@ -1,0 +1,69 @@
+syntax = "v1"
+
+info (
+	title:   "数据统计"
+	version: "v1.0"
+)
+
+@server (
+	group:      analysis
+	middleware: ManageJWT
+)
+service gallery-api {
+	@doc (
+		summary: "获取统计基础数据"
+	)
+	@handler GetAnalysisBase
+	get /api/v1/manage/analysis/base returns (GetAnalysisBaseResponse)
+
+	@doc (
+		summary: "获取统计任务数据"
+	)
+	@handler GetAnalysisTask
+	get /api/v1/manage/analysis/task (GetAnalysisTaskRequest) returns (GetAnalysisTaskResponse)
+
+	@doc (
+		summary: "获取统计用户数据"
+	)
+	@handler GetAnalysisUser
+	get /api/v1/manage/analysis/user (GetAnalysisUserRequest) returns (GetAnalysisUserResponse)
+}
+
+type GetAnalysisUserRequest {
+	Day int `form:"day,default=1"` // 几天内
+}
+
+type GetAnalysisUserResponse {
+	AnalysisUserBo []*AnalysisUserBo `json:"users"`
+}
+
+type AnalysisUserBo {
+	AuthorID   int    `json:"author_id"`
+	AuthorName string `json:"author_name"`
+	Count      int    `json:"count"`
+}
+
+type GetAnalysisTaskRequest {
+	Day int `form:"day,default=7"` // 几天内
+}
+
+type GetAnalysisTaskResponse {
+	Times          []string          `json:"times"`
+	AnalysisTaskBo []*AnalysisTaskBo `json:"tasks"`
+}
+
+type AnalysisTaskBo {
+	Name string `json:"name"`
+	Data []int  `json:"data"`
+}
+
+type GetAnalysisBaseResponse {
+	TaskTotal           int `json:"task_total"` // 任务总数
+	WorkTotal           int `json:"work_total"` // 作品总数
+	ExcellentTotal      int `json:"excellent_total"` // 优秀作品数
+	AccountTotal        int `json:"account_total"` // 用户总数
+	TodayTaskCount      int `json:"today_task_count"` // 今日任务数
+	TodayWorkCount      int `json:"today_work_count"` // 今日作品总数
+	TodayExcellentCount int `json:"today_excellent_count"` // 今日优秀作品数
+}
+

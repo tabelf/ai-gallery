@@ -1,0 +1,120 @@
+syntax = "v1"
+
+info (
+	title:   "后台管理"
+	version: "v1.0"
+)
+
+@server (
+	group:      account
+	middleware: JWT
+)
+service gallery-api {
+	@doc (
+		summary: "获取账号信息"
+	)
+	@handler GetUserDetail
+	get /api/v1/manage/user/detail returns (GetUserDetailResponse)
+
+	@doc (
+        summary: "修改账号信息"
+    )
+    @handler UpdateUserDetail
+    put /api/v1/manage/user/detail (UpdateUserDetailRequest)
+}
+
+type UpdateUserDetailRequest {
+    UserID   int    `json:"user_id"`
+    Username string `json:"username"`
+    Nickname string `json:"nickname"`
+    OldPassword string `json:"old_password,optional"`
+    NewPassword string `json:"new_password,optional"`
+}
+
+type GetUserDetailResponse {
+    UserID   int    `json:"user_id"`
+    Username string `json:"username"`
+    Nickname string `json:"nickname"`
+    Role    string `json:"role"`
+}
+
+@server (
+	group:      account
+	middleware: ManageJWT
+)
+service gallery-api {
+	@doc (
+		summary: "新建用户"
+	)
+	@handler AddUser
+	post /api/v1/manage/user (AddUserRequest)
+
+	@doc (
+		summary: "修改用户信息"
+	)
+	@handler UpdateUser
+	put /api/v1/manage/user/:user_id (UpdateUserRequest)
+
+	@doc (
+		summary: "用户列表"
+	)
+	@handler GetUser
+	get /api/v1/manage/user (GetUserRequest) returns (GetUserResponse)
+
+	@doc (
+		summary: "重置密码"
+	)
+	@handler ResetPwd
+	put /api/v1/manage/user/:user_id/reset (ResetPwdRequest)
+
+	@doc (
+		summary: "删除用户"
+	)
+	@handler DeleteUser
+	delete /api/v1/manage/user/:user_id (DeleteUserRequest)
+}
+
+type DeleteUserRequest {
+	UserID int `path:"user_id"`
+}
+
+type AddUserRequest {
+	Username string `json:"username"`
+	Nickname string `json:"nickname"`
+	Role     string `json:"role,options=ADMIN|USER"`
+}
+
+type UpdateUserRequest {
+	UserID   int    `path:"user_id"`
+	Username string `json:"username,optional"`
+	Nickname string `json:"nickname,optional"`
+	Role     string `json:"role,options=ADMIN|USER,optional"`
+	Status   int    `json:"status,default=-1,optional"`
+}
+
+type GetUserRequest {
+	Offset   int    `form:"offset,default=0"`
+	Limit    int    `form:"limit,default=10"`
+	Username string `form:"username,optional"`
+	Nickname string `form:"nickname,optional"`
+	Role     string `form:"role,options=ADMIN|USER,optional"`
+	Status   int    `form:"status,default=-1,optional"`
+}
+
+type UserBo {
+	UserID   int    `json:"user_id"`
+	Username string `json:"username"`
+	Nickname string `json:"nickname"`
+	Role     string `json:"role"`
+	Status   int    `json:"status"`
+}
+
+type GetUserResponse {
+	Total int       `json:"total"`
+	Data  []*UserBo `json:"data"`
+}
+
+type ResetPwdRequest {
+	UserID int `path:"user_id"`
+}
+

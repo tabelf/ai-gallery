@@ -1,0 +1,78 @@
+syntax = "v1"
+
+info (
+	title:   "任务功能"
+	version: "v1.0"
+)
+
+@server (
+	group:      task
+	middleware: Headers
+)
+service gallery-api {
+	@doc (
+		summary: "创建任务"
+	)
+	@handler CreateTask
+	post /api/v1/task (CreateTaskReq) returns (CreateTaskResp)
+
+	@doc (
+		summary: "创建子任务"
+	)
+	@handler CreateSubTask
+	post /api/v1/sub_task (CreateSubTaskReq) returns (CreateSubTaskResp)
+
+	@doc (
+		summary: "更新任务"
+	)
+	@handler UpdateTask
+	put /api/v1/task/:task_id (UpdateTaskReq)
+}
+
+type CreateTaskReq {
+	Category       string      `json:"category"`
+	Prompt         string      `json:"prompt"`
+	NegativePrompt string      `json:"negative_prompt"`
+	RefImages      []TaskImage `json:"ref_images"`
+	Width          float32     `json:"width"`
+	Height         float32     `json:"height"`
+	Seed           string      `json:"seed"`
+	SamplerName    string      `json:"sampler_name"`
+	Steps          int         `json:"steps"` // 采样步数
+	CfgScale       int         `json:"cfg_scale"`
+	BatchSize      int         `json:"batch_size"`
+	Total          int         `json:"total"`
+	SdModelName    string      `json:"sd_model_name"`
+	SdModelHash    string      `json:"sd_model_hash"`
+	SdVaeName      *string     `json:"sd_vae_name,optional"`
+	SdVaeHash      *string     `json:"sd_vae_hash,optional"`
+	JobTimestamp   string      `json:"job_timestamp"`
+	Version        string      `json:"version"`
+}
+
+type CreateTaskResp {
+	TaskID int `json:"task_id"`
+}
+
+type CreateSubTaskReq {
+	TaskID   int64  `json:"task_id"`
+	Base64   string `json:"base64"`
+	Filename string `json:"filename"`
+}
+
+type CreateSubTaskResp {
+	SubTaskID int `json:"sub_task_id"`
+}
+
+type TaskImage {
+	Base64   string `json:"base64"`
+	Filename string `json:"filename"`
+}
+
+type UpdateTaskReq {
+	TaskID   int    `path:"task_id"`
+	Base64   string `json:"base64,optional"`
+	Filename string `json:"filename,optional"`
+	Extra    string `json:"extra,optional"`
+}
+

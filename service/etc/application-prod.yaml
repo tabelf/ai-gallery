@@ -1,0 +1,25 @@
+Name: ai-gallery-api
+Host: 0.0.0.0
+Port: 8888
+Timeout: 180000 # 3分钟
+MaxBytes: 10485760 # 10M
+
+logger:
+  service_name: ai-gallery
+  mode: file
+  encoding: json
+  Path: logs
+  Level: debug
+  KeepDays: 30
+  Rotation: daily
+
+jwt:
+  jwt_key: 392b3436fba28bc99a06eeb5620d8520
+  jwt_expire: 2592000 # 秒（30天）
+  jwt_issuer: ai-gallery
+
+db:
+  url: root:12345678@(127.0.0.1:3306)/ai_gallery?charset=utf8mb4&parseTime=true&loc=Local&interpolateParams=true
+  driver: mysql
+  max_open_conns: 100
+  max_idle_conns: 30

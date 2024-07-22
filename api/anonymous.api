@@ -1,0 +1,30 @@
+syntax = "v1"
+
+info (
+	title:   "匿名接口"
+	version: "v1.0"
+)
+
+@server (
+	group: anonymous
+)
+service gallery-api {
+	@doc (
+		summary: "用户登录"
+	)
+	@handler AuthLogin
+	post /api/v1/anonymous/login (AuthLoginRequest) returns (AuthLoginResponse)
+}
+
+type AuthLoginRequest {
+	Username string `json:"username"`
+	Password string `json:"password"`
+}
+
+type AuthLoginResponse {
+	UserID   int    `json:"user_id"`
+	Username string `json:"username"`
+	Role     string `json:"role"`
+	Token    string `json:"token"`
+}
+

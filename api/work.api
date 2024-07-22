@@ -1,0 +1,169 @@
+syntax = "v1"
+
+info (
+	title:   "作品接口"
+	version: "v1.0"
+)
+
+@server (
+	group:      work
+	middleware: JWT
+)
+service gallery-api {
+	@doc (
+		summary: "获取作品列表"
+	)
+	@handler GetWork
+	get /api/v1/manage/work (GetWorkRequest) returns (GetWorkResponse)
+
+	@doc (
+		summary: "获取作品详情"
+	)
+	@handler GetWorkDetail
+	get /api/v1/manage/work/:task_id (GetWorkDetailRequest) returns (GetWorkDetailResponse)
+
+	@doc (
+		summary: "获取任务列表"
+	)
+	@handler GetTask
+	get /api/v1/manage/task (GetTaskRequest) returns (GetTaskResponse)
+
+	@doc (
+		summary: "获取上传人列表"
+	)
+	@handler GetTaskAuthor
+	get /api/v1/manage/task/author returns (GetTaskAuthorResponse)
+
+	@doc (
+		summary: "获取上传模型列表"
+	)
+	@handler GetTaskModel
+	get /api/v1/manage/task/model returns (GetTaskModelResponse)
+
+	@doc (
+		summary: "获取上传此尺寸列表"
+	)
+	@handler GetTaskSize
+	get /api/v1/manage/task/size returns (GetTaskSizeResponse)
+
+	@doc (
+		summary: "标记作品为优秀"
+	)
+	@handler MarkWorkExcellent
+	put /api/v1/manage/work/excellent (MarkWorkExcellentRequest)
+}
+
+type MarkWorkExcellentRequest {
+	TaskID       int  `json:"task_id"`
+	SubTaskID    int  `json:"sub_task_id"`
+	HasExcellent bool `json:"has_excellent"`
+}
+
+type GetWorkRequest {
+	Offset       int    `form:"offset,default=0"`
+	Limit        int    `form:"limit,default=10"`
+	Sorted       string `form:"sorted,default=asc,optional"`
+	Size         string `form:"size,optional"`
+	SdModelName  string `json:"sd_model_name,optional"`
+	HasExcellent *int   `form:"has_excellent,default=-1,optional"`
+	HasRefImage  *int   `form:"has_ref_image,default=-1,optional"`
+}
+
+type GetWorkResponse {
+	Total int       `json:"total"`
+	Data  []*WorkBo `json:"data"`
+}
+
+type WorkBo {
+	TaskID     int    `json:"task_id"`
+	Category   string `json:"category"`
+	Prompt     string `json:"prompt"`
+	Size       string `json:"size"`
+	AuthorID   int    `json:"author_id"`
+	AuthorName string `json:"author_name"`
+	Count      int    `json:"count"`
+	HeadImage  string `json:"head_image"`
+}
+
+type TaskAuthorBo {
+	AuthorID   int    `json:"author_id"`
+	AuthorName string `json:"author_name"`
+}
+
+type GetTaskAuthorResponse {
+	TaskAuthorBo []*TaskAuthorBo `json:"data"`
+}
+
+type GetTaskModelResponse {
+	Models []string `json:"models"`
+}
+
+type GetTaskSizeResponse {
+	Sizes []string `json:"sizes"`
+}
+
+type GetWorkDetailRequest {
+	TaskID int `path:"task_id"`
+}
+
+type GetWorkDetailResponse {
+	TaskID         int             `json:"task_id"`
+	Category       string          `json:"category"`
+	Prompt         string          `json:"prompt"`
+	NegativePrompt string          `json:"negative_prompt"`
+	Width          float32         `json:"width"`
+	Height         float32         `json:"height"`
+	Size           string          `json:"size"`
+	Seed           string          `json:"seed"`
+	SamplerName    string          `json:"sampler_name"`
+	Steps          int             `json:"steps"` // 采样步数
+	CfgScale       int             `json:"cfg_scale"`
+	BatchSize      int             `json:"batch_size"`
+	Total          int             `json:"total"`
+	SdModelName    string          `json:"sd_model_name"`
+	SdModelHash    string          `json:"sd_model_hash"`
+	SdVaeName      string          `json:"sd_vae_name"`
+	SdVaeHash      string          `json:"sd_vae_hash"`
+	JobTimestamp   string          `json:"job_timestamp"`
+	Version        string          `json:"version"`
+	AuthorID       int             `json:"author_id"`
+	AuthorName     string          `json:"author_name"`
+	RefImages      []string        `json:"ref_images"`
+	WorkDetailBos  []*WorkDetailBo `json:"details"`
+}
+
+type WorkDetailBo {
+	SubTaskID    int    `json:"sub_task_id"`
+	ImageURL     string `json:"image_url"`
+	HasExcellent bool   `json:"has_excellent"`
+}
+
+type GetTaskRequest {
+	Offset    int    `form:"offset,default=0"`
+	Limit     int    `form:"limit,default=10"`
+	StartTime string `form:"start_time,optional"`
+	EndTime   string `form:"end_time,optional"`
+	AuthorIDs []int  `form:"author_ids,optional"`
+	Category  string `form:"category,optional"`
+	Status    string `form:"status,optional"`
+}
+
+type TaskBo {
+	TaskID       int      `json:"task_id"`
+	Category     string   `json:"category"`
+	Prompt       string   `json:"prompt"`
+	Size         string   `json:"size"`
+	AuthorID     int      `json:"author_id"`
+	AuthorName   string   `json:"author_name"`
+	Total        int      `json:"total"`
+	JobTimestamp string   `json:"job_timestamp"`
+	Status       string   `json:"status"`
+	Count        int      `json:"count"`
+	ImageUrls    []string `json:"image_urls"`
+}
+
+type GetTaskResponse {
+	Total int       `json:"total"`
+	Data  []*TaskBo `json:"data"`
+}
+

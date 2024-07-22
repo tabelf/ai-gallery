@@ -1,0 +1,43 @@
+syntax = "v1"
+
+info (
+	title:   "系统设置"
+	version: "v1.0"
+)
+
+@server (
+	group:      setting
+	middleware: ManageJWT
+)
+service gallery-api {
+	@doc (
+		summary: "查询系统配置"
+	)
+	@handler GetSetting
+	get /api/v1/manage/setting returns (GetSettingResponse)
+
+	@doc (
+		summary: "修改系统配置"
+	)
+	@handler UpdateSetting
+	put /api/v1/manage/setting (UpdateSettingRequest)
+}
+
+type GetSettingResponse {
+	StoreName    string `json:"store_name"`
+	StoreAddress string `json:"store_address"`
+	SecureID     string `json:"secure_id"`
+	SecureKey    string `json:"secure_key"`
+	StoreBucket  string `json:"store_bucket"`
+	InitPwd      string `json:"init_pwd"`
+}
+
+type UpdateSettingRequest {
+	StoreName    string `json:"store_name"`
+	StoreAddress string `json:"store_address"`
+	SecureID     string `json:"secure_id,optional"`
+	SecureKey    string `json:"secure_key,optional"`
+		StoreBucket  string `json:"store_bucket,optional"`
+	InitPwd      string `json:"init_pwd"`
+}
+

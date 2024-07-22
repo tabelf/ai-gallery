@@ -1,0 +1,31 @@
+syntax = "v1"
+
+import (
+	"task.api"
+	"anonymous.api"
+	"account.api"
+	"analysis.api"
+	"work.api"
+	"setting.api"
+)
+
+info (
+	title: "base api"
+	desc:  "基础接口"
+)
+
+type PingResp {
+	Message string `json:"message"`
+}
+
+@server (
+	group: base
+)
+service gallery-api {
+	@doc (
+		summary: "心跳检查"
+	)
+	@handler Ping
+	get /api/base/ping returns (PingResp)
+}
+
