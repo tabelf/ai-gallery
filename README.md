@@ -3,9 +3,9 @@
 
 ai-gallery 是一项基于 Go-Zero + SD Plugin + Vite/React + Ant Design 的技术，完成管理 SD 绘画任务的前后端分离系统。
 
-- (后端项目)[https://github.com/tabelf/ai-gallery] <br/>
-- (前端项目) <br/>
-- SD 插件 <br/>
+- [后端项目](https://github.com/tabelf/ai-gallery) <br/>
+- [前端项目](https://github.com/tabelf/ai-gallery-ui) <br/>
+- [SD 插件](https://github.com/tabelf/sd-webui-gen2gallery) <br/>
 
 ## 功能演示
 <hr/>
@@ -31,7 +31,7 @@ npm                      v9.6.7
 react                    v18.2.0
 stable diffuison webui   v1.9.3
 mysql                    v8.0.28
-nginx                    v1.25.3 [图片非本地存储, 可选]
+nginx                    v1.25.3
 ```
 
 ### 导入表结构
@@ -130,13 +130,13 @@ create table core_setting
 ### 获取代码
 ```bash
 # 获取插件代码
-git clone https://github.com/go-admin-team/go-admin.git
+git clone https://github.com/tabelf/sd-webui-gen2gallery.git
 
 # 获取后端代码
-git clone https://github.com/go-admin-team/go-admin.git
+git clone https://github.com/tabelf/ai-gallery.git
 
 # 获取前端代码
-git clone https://github.com/go-admin-team/go-admin.git
+git clone https://github.com/tabelf/ai-gallery-ui.git
 ```
 
 ## 启动说明
@@ -144,7 +144,7 @@ git clone https://github.com/go-admin-team/go-admin.git
 ### 服务端启动
 ```bash
 # 进入到后端项目目录
-cd ./ai_gallery
+cd ./ai-gallery
 
 # 安装 go 项目依赖
 go mod tidy
@@ -160,10 +160,10 @@ vi ./service/etc/application-dev.yaml
 #  max_idle_conns: 30
 
 # 编译项目
-go build -o ai_gallery ./service/gallery.go
+go build -o ai-gallery ./service/gallery.go
 
 # 运行项目
-./ai_gallery
+./ai-gallery
 ```
 
 ### 前端启动
@@ -177,7 +177,7 @@ vite dev
 # 部署成功会显示地址
 http://localhost:5173/
 
-# 首先要进行登录，
+# 首先要进行登录
 # 默认账号：admin 
 # 密码：   1234567
 
@@ -185,6 +185,12 @@ http://localhost:5173/
 # 如果存储选择本地，需要配置下面的 nginx
 # 如果存储选择腾讯云cos，需要配置存储地址，ID，key，记得打开跨域设置
 # 如果存储选择阿里云oos，需要配置存储桶名称，存储地址，ID，key，记得打开跨域设置
+```
+
+### 前端登录
+```
+默认账号：admin 
+密码：   1234567
 ```
 
 ### SD 插件
@@ -220,3 +226,13 @@ location /upload/ {
 }
 ```
 
+## 联系
+
+<table>
+   <tr>
+    <td><img src="./wechat.png" width="180px"></td>
+  </tr>
+  <tr>
+    <td>微信留言</td>
+  </tr>
+</table>
