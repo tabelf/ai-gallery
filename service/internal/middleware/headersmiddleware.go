@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"ai-gallery/service/internal/errors"
 	"context"
 	"encoding/json"
 	"net/http"
@@ -34,12 +35,12 @@ func (m *HeadersMiddleware) Handle(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		headers := r.Header.Get("X-Ag-H-U")
 		if strutil.IsBlank(headers) {
-			http.Error(w, "用户信息不存在", http.StatusUnauthorized)
+			http.Error(w, errors.ErrHeaderNotFound(r.Context()).Error(), http.StatusUnauthorized)
 			return
 		}
 		var user UserRo
 		if err := json.Unmarshal([]byte(headers), &user); err != nil {
-			http.Error(w, "用户信息解析失败", http.StatusUnauthorized)
+			http.Error(w, errors.ErrHeaderParsing(r.Context()).Error(), http.StatusUnauthorized)
 			return
 		}
 		account, err := basic.ValidateAccount(r.Context(), user.Username, user.Password)

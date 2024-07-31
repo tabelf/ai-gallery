@@ -2,10 +2,10 @@ package basic
 
 import (
 	"ai-gallery/pkg/jwt"
+	"ai-gallery/service/internal/dao/account"
 	"context"
 
 	"ai-gallery/ent"
-	"ai-gallery/service/internal/dao/account"
 	"ai-gallery/service/internal/errors"
 	"ai-gallery/service/internal/model"
 

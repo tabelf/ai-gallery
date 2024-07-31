@@ -1,6 +1,7 @@
 package task
 
 import (
+	"ai-gallery/service/internal/dao"
 	"bytes"
 	"context"
 	"encoding/base64"
@@ -8,7 +9,6 @@ import (
 
 	enttask "ai-gallery/ent/task"
 	"ai-gallery/ent/taskdetail"
-	"ai-gallery/service/internal/dao"
 	"ai-gallery/service/internal/errors"
 	basic "ai-gallery/service/internal/logic/basic/upload"
 	"ai-gallery/service/internal/model"

@@ -1,19 +1,19 @@
 package account
 
 import (
+	"context"
+
 	"ai-gallery/ent"
 	"ai-gallery/service/internal/dao/account"
 	"ai-gallery/service/internal/dao/task"
 	"ai-gallery/service/internal/errors"
 	"ai-gallery/service/internal/model"
-	"context"
-	"github.com/duke-git/lancet/v2/strutil"
-	"golang.org/x/crypto/bcrypt"
-
 	"ai-gallery/service/internal/svc"
 	"ai-gallery/service/internal/types"
 
+	"github.com/duke-git/lancet/v2/strutil"
 	"github.com/zeromicro/go-zero/core/logx"
+	"golang.org/x/crypto/bcrypt"
 )
 
 type UpdateUserDetailLogic struct {

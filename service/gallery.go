@@ -1,7 +1,8 @@
-package main
+package service
 
 import (
 	"context"
+	"flag"
 	"fmt"
 
 	"ai-gallery/ent"
@@ -15,25 +16,27 @@ import (
 	"ai-gallery/service/internal/model"
 	"ai-gallery/service/internal/svc"
 
+	"github.com/zeromicro/go-zero/core/conf"
 	"github.com/zeromicro/go-zero/core/logc"
 	"github.com/zeromicro/go-zero/rest"
 	"golang.org/x/crypto/bcrypt"
 )
 
-func main() {
+func StartHTTP(env string) {
+	c := LoadConfig(env)
 	ctx := context.Background()
-	c := config.LoadConfig()
 
 	server := rest.MustNewServer(c.RestConf,
 		rest.WithNotAllowedHandler(middleware.NewCorsMiddleware().Handler()))
 	defer server.Stop()
 
-	_, err := dao.NewDB(c.DB)
-	if err != nil {
-		return
-	}
 	svcCtx := svc.NewServiceContext(c)
 
+	_, err := InitDB(c)
+	if err != nil {
+		logc.Errorf(ctx, "init db failed: %+v", err)
+		return
+	}
 	// 创建系统数据.
 	if err = createSystemData(ctx); err != nil {
 		logc.Errorf(ctx, "init admin account failed: %+v", err)
@@ -53,6 +56,34 @@ func main() {
 	fmt.Printf("Starting server at %s:%d...\n", c.Host, c.Port)
 	cronJob.Start()
 	server.Start()
+}
+
+func InitDB(c config.Config) (*ent.Client, error) {
+	return dao.NewDB(c.DB)
+}
+
+const (
+	Dev  = "dev"
+	Prod = "prod"
+)
+
+var devConfigFile = flag.String(Dev, "service/etc/application-dev.yaml", "loading dev config file")
+var prodConfigFile = flag.String(Prod, "service/etc/application-prod.yaml", "loading prod config file")
+
+func LoadConfig(env string) config.Config {
+	var (
+		c    config.Config
+		file *string
+	)
+	if env == Prod {
+		file = prodConfigFile
+	} else {
+		file = devConfigFile
+	}
+
+	conf.MustLoad(*file, &c)
+	logc.MustSetup(c.Logger)
+	return c
 }
 
 func createSystemData(ctx context.Context) error {

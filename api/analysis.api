@@ -54,6 +54,7 @@ type GetAnalysisTaskResponse {
 
 type AnalysisTaskBo {
 	Name string `json:"name"`
+	EnName string `json:"en_name"`
 	Data []int  `json:"data"`
 }
 

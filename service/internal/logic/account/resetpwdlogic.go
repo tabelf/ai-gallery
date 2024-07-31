@@ -1,10 +1,10 @@
 package account
 
 import (
-	"ai-gallery/service/internal/dao/setting"
 	"context"
 
 	"ai-gallery/service/internal/dao/account"
+	"ai-gallery/service/internal/dao/setting"
 	"ai-gallery/service/internal/model"
 	"ai-gallery/service/internal/svc"
 	"ai-gallery/service/internal/types"

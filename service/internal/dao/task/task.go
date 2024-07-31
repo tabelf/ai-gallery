@@ -1,13 +1,12 @@
 package task
 
 import (
+	"ai-gallery/service/internal/dao"
 	"context"
 	"time"
 
 	"ai-gallery/ent"
 	enttask "ai-gallery/ent/task"
-	"ai-gallery/service/internal/dao"
-
 	"entgo.io/ent/dialect/sql"
 	"github.com/duke-git/lancet/v2/strutil"
 )

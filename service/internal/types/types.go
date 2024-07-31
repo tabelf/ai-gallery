@@ -8,8 +8,9 @@ type AddUserRequest struct {
 }
 
 type AnalysisTaskBo struct {
-	Name string `json:"name"`
-	Data []int  `json:"data"`
+	Name   string `json:"name"`
+	EnName string `json:"en_name"`
+	Data   []int  `json:"data"`
 }
 
 type AnalysisUserBo struct {

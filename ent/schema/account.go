@@ -5,6 +5,7 @@ import (
 	"entgo.io/ent/dialect/entsql"
 	"entgo.io/ent/schema"
 	"entgo.io/ent/schema/field"
+	"entgo.io/ent/schema/index"
 )
 
 type Account struct {
@@ -23,6 +24,12 @@ func (Account) Fields() []ent.Field {
 
 func (Account) Edges() []ent.Edge {
 	return nil
+}
+
+func (Account) Indexes() []ent.Index {
+	return []ent.Index{
+		index.Fields("username").Unique(),
+	}
 }
 
 func (Account) Annotations() []schema.Annotation {

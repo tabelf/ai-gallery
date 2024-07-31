@@ -6,6 +6,7 @@ import (
 	"entgo.io/ent/dialect/entsql"
 	"entgo.io/ent/schema"
 	"entgo.io/ent/schema/field"
+	"entgo.io/ent/schema/index"
 )
 
 type Task struct {
@@ -47,6 +48,12 @@ func (Task) Fields() []ent.Field {
 
 func (Task) Edges() []ent.Edge {
 	return nil
+}
+
+func (Task) Indexes() []ent.Index {
+	return []ent.Index{
+		index.Fields("author_id"),
+	}
 }
 
 func (Task) Annotations() []schema.Annotation {

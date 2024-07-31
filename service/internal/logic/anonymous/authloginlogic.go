@@ -1,11 +1,11 @@
 package anonymous
 
 import (
-	"ai-gallery/service/internal/logic/basic"
 	"context"
 
 	pkg "ai-gallery/pkg/jwt"
 	"ai-gallery/service/internal/errors"
+	"ai-gallery/service/internal/logic/basic"
 	"ai-gallery/service/internal/model"
 	"ai-gallery/service/internal/svc"
 	"ai-gallery/service/internal/types"

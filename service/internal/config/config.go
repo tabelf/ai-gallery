@@ -1,9 +1,6 @@
 package config
 
 import (
-	"flag"
-
-	"github.com/zeromicro/go-zero/core/conf"
 	"github.com/zeromicro/go-zero/core/logc"
 	"github.com/zeromicro/go-zero/rest"
 )
@@ -26,32 +23,4 @@ type JWTConf struct {
 	JwtKey    string `json:"jwt_key"`
 	JwtExpire int64  `json:"jwt_expire"`
 	JwtIssuer string `json:"jwt_issuer"`
-}
-
-const (
-	ENV  = "env"
-	Dev  = "dev"
-	Prod = "prod"
-)
-
-var devConfigFile = flag.String(Dev, "service/etc/application-dev.yaml", "loading dev config file")
-var prodConfigFile = flag.String(Prod, "service/etc/application-prod.yaml", "loading prod config file")
-
-func LoadConfig() Config {
-	var (
-		env    string
-		c      Config
-		config *string
-	)
-	flag.StringVar(&env, ENV, "", "测试环境")
-	flag.Parse()
-	if env == Prod {
-		config = prodConfigFile
-	} else {
-		config = devConfigFile
-	}
-
-	conf.MustLoad(*config, &c)
-	logc.MustSetup(c.Logger)
-	return c
 }

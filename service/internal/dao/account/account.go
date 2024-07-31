@@ -1,13 +1,12 @@
 package account
 
 import (
+	"ai-gallery/service/internal/dao"
 	"context"
 	"time"
 
 	"ai-gallery/ent"
 	entaccount "ai-gallery/ent/account"
-	"ai-gallery/service/internal/dao"
-
 	"github.com/duke-git/lancet/v2/strutil"
 )
 

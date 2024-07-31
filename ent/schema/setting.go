@@ -5,6 +5,7 @@ import (
 	"entgo.io/ent/dialect/entsql"
 	"entgo.io/ent/schema"
 	"entgo.io/ent/schema/field"
+	"entgo.io/ent/schema/index"
 )
 
 type Setting struct {
@@ -23,6 +24,12 @@ func (Setting) Fields() []ent.Field {
 
 func (Setting) Edges() []ent.Edge {
 	return nil
+}
+
+func (Setting) Indexes() []ent.Index {
+	return []ent.Index{
+		index.Fields("config_key").Unique(),
+	}
 }
 
 func (Setting) Annotations() []schema.Annotation {

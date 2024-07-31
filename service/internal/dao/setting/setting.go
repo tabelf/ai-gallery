@@ -1,13 +1,13 @@
 package setting
 
 import (
+	"ai-gallery/service/internal/dao"
 	"context"
 	"time"
 
 	"ai-gallery/ent"
 	entsetting "ai-gallery/ent/setting"
 	"ai-gallery/pkg/errgroup"
-	"ai-gallery/service/internal/dao"
 	"ai-gallery/service/internal/model"
 )
 

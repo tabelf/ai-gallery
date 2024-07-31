@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"ai-gallery/service/internal/errors"
 	"context"
 	"net/http"
 
@@ -22,7 +23,7 @@ func (m *ManageJWTMiddleware) Handle(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		token := r.Header.Get("Authorization")
 		if token == "" {
-			http.Error(w, "未提供有效身份许可", http.StatusUnauthorized)
+			http.Error(w, errors.ErrPermissionProvider(r.Context()).Error(), http.StatusUnauthorized)
 			return
 		}
 		tokenType, claims := jwt.IsValidateOfToken(token, m.JwtKey)
@@ -44,9 +45,9 @@ func (m *ManageJWTMiddleware) Handle(next http.HandlerFunc) http.HandlerFunc {
 				return
 			}
 		case jwt.ExpiredToken:
-			resultMessage = "令牌已失效!"
+			resultMessage = errors.ErrTokenExpired(reqCtx).Error()
 		case jwt.BadToken:
-			resultMessage = "未提供有效令牌"
+			resultMessage = errors.ErrTokenValid(reqCtx).Error()
 		}
 		http.Error(w, resultMessage, http.StatusUnauthorized)
 	}

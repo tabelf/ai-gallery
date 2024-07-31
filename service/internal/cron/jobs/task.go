@@ -1,13 +1,13 @@
 package jobs
 
 import (
+	"ai-gallery/service/internal/dao"
 	"context"
 	"time"
 
 	enttask "ai-gallery/ent/task"
 	"ai-gallery/pkg/utils"
 	"ai-gallery/service/internal/config"
-	"ai-gallery/service/internal/dao"
 	"ai-gallery/service/internal/model"
 
 	"github.com/zeromicro/go-zero/core/logc"

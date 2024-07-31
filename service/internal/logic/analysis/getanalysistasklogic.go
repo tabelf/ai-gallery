@@ -1,14 +1,14 @@
 package analysis
 
 import (
-	"ai-gallery/pkg/errgroup"
-	"ai-gallery/service/internal/dao"
 	"context"
 	"time"
 
 	enttask "ai-gallery/ent/task"
 	"ai-gallery/ent/taskdetail"
+	"ai-gallery/pkg/errgroup"
 	"ai-gallery/pkg/utils"
+	"ai-gallery/service/internal/dao"
 	"ai-gallery/service/internal/svc"
 	"ai-gallery/service/internal/types"
 
@@ -94,16 +94,19 @@ func (l *GetAnalysisTaskLogic) GetAnalysisTask(req *types.GetAnalysisTaskRequest
 		Times: times,
 		AnalysisTaskBo: []*types.AnalysisTaskBo{
 			{
-				Name: "任务数",
-				Data: taskData,
+				Name:   "任务数",
+				EnName: "tasks",
+				Data:   taskData,
 			},
 			{
-				Name: "作品数",
-				Data: workData,
+				Name:   "作品数",
+				EnName: "works",
+				Data:   workData,
 			},
 			{
-				Name: "优秀作品数",
-				Data: excellentData,
+				Name:   "优秀作品数",
+				EnName: "excellent works",
+				Data:   excellentData,
 			},
 		},
 	}, nil

@@ -1,34 +1,33 @@
 # ai-gallery
 <hr/>
 
-[ English | [Chinese](README_zh.md) ]
+[ [English](README.md)  | Chinese ]
 
-ai-gallery is a front-end and back-end separation system based on Go-Zero + SD Plugin + Vite/React + Ant Design technology, which is used to uniformly manage SD painting tasks.
+ai-gallery 是一个基于 Go-Zero + SD Plugin + Vite/React + Ant Design 技术的前后端分离系统，用于统一管理 SD 绘画任务。
 
-- [Backend Project](https://github.com/tabelf/ai-gallery) <br/>
-- [Front-end Project](https://github.com/tabelf/ai-gallery-ui) <br/>
-- [SD Plugin](https://github.com/tabelf/sd-webui-gen2gallery) <br/>
+- [后端项目](https://github.com/tabelf/ai-gallery) <br/>
+- [前端项目](https://github.com/tabelf/ai-gallery-ui) <br/>
+- [SD 插件](https://github.com/tabelf/sd-webui-gen2gallery) <br/>
 
-## Demo
+## 功能演示
 <hr/>
 
 https://github.com/user-attachments/assets/db6ac661-84ca-47b8-934b-86f1f61a9578
 
+[完整视频演示](https://www.bilibili.com/video/BV1mt8ue6E1Y)
 
-[Full video demonstration](https://www.bilibili.com/video/BV1mt8ue6E1Y)
-
-## ✨ Feature
+## ✨ 功能
 <hr/>
 
-- Manage SD txt2img and img2img drawing task tecord
-- SD generate image cloud/local storage
-- Aggregation of task data submitted by multiple users
-- User management
-- System settings
+- 管理 SD 文生图、图生图绘画任务记录
+- SD 生成图片云端/本地存储
+- 多用户提交任务数据汇总
+- 用户管理
+- 系统设置
 
-## 💼 Preparation
+## 💼 准备工作
 
-### Environment Preparation
+### 环境准备
 ```text
 go sdk                   v1.21.0
 node                     v21.6.2
@@ -39,34 +38,34 @@ mysql                    v8.0.28
 nginx                    v1.25.3
 ```
 
-### Get the code
+### 获取代码
 ```bash
-# get the plugin project code 
+# 获取插件代码
 git clone https://github.com/tabelf/sd-webui-gen2gallery.git
 
-# get the backend project code
+# 获取后端代码
 git clone https://github.com/tabelf/ai-gallery.git
 
-# get front-end project code
+# 获取前端代码
 git clone https://github.com/tabelf/ai-gallery-ui.git
 ```
 
-## Startup
+## 启动说明
 
-### Server startup
+### 服务端启动
 ```bash
-# enter the backend project directory
+# 进入到后端项目目录
 cd ./ai-gallery
 
-# install go dependencies
+# 安装 go 项目依赖
 go mod tidy
 
-# modify database config
+# 修改数据库配置
 vi ./service/etc/application-dev.yaml
 
-# root: database username
-# 12345678: database password
-# ai_gallery: database name
+# root 修改为自己数据库的用户名
+# 12345678 为密码
+# ai_gallery 为数据库名称
 
 # db:
 #  url: root:12345678@(127.0.0.1:3306)/ai_gallery?charset=utf8mb4&parseTime=true&loc=Local&interpolateParams=true
@@ -74,50 +73,50 @@ vi ./service/etc/application-dev.yaml
 #  max_open_conns: 100
 #  max_idle_conns: 30
 
-# generate database tables
+# 生成表结构
 go run cmd/main.go migrate --env dev
 
-# run
+# 运行项目
 go run cmd/main.go start --env dev
 ```
 
-### Front-end startup
+### 前端启动
 ```bash
-# install dependencies. 
+# 安装依赖，如果执行慢需要配置镜像源
 npm install
 
-# start the service
+# 启动服务
 vite dev
 
-# the address will be displayed if the deployment is successful
+# 部署成功会显示地址
 http://localhost:5173/
 
-# login
-# username：admin 
-# password：   1234567
+# 首先要进行登录
+# 默认账号：admin 
+# 密码：   1234567
 
-# Go to the system settings menu bar and configure the location where the pictures are to be stored
-# If you choose local storage, you need to configure the following nginx
-# If you choose Tencent Cloud cos for storage, you need to configure the storage address, ID, key, and remember to turn on cross-domain settings
-# If you choose Alibaba Cloud OOS for storage, you need to configure the bucket name, storage address, ID, key, and remember to enable cross-domain settings.
-```
-
-### Login Account
-```
-username：admin 
-password：1234567
+# 到系统设置菜单栏中，配置图片要存储的位置
+# 如果存储选择本地，需要配置下面的 nginx
+# 如果存储选择腾讯云cos，需要配置存储地址，ID，key，记得打开跨域设置
+# 如果存储选择阿里云oos，需要配置存储桶名称，存储地址，ID，key，记得打开跨域设置
 ```
 
-### SD Plugin
+### 登录账号
 ```
-# 1. Put the plug-in project in the extensions directory of stable diffusion webui
+默认账号：admin 
+密码：   1234567
+```
 
-# 2. Normal start ./webui
+### SD 插件
+```
+# 1. 把插件项目放到 stable diffusion webui 的 extensions 扩展目录下即可
+
+# 2. 正常启动 webui
 ```
 
-### Nginx config
+### nginx 配置
 ```
-# Add in the nginx.conf configuration file
+# 在 nginx.conf 配置文件中添加
 
 location /upload/ {
     alias /Users/stable-diffusion-webui/; # 修改成自己 stable-diffusion-webui 文件的路径亘路径
@@ -148,6 +147,6 @@ location /upload/ {
     <td><img src="./wechat.png" width="180px"></td>
   </tr>
   <tr>
-    <td>wechat</td>
+    <td>微信留言</td>
   </tr>
 </table>

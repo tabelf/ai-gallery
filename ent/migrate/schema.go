@@ -26,6 +26,13 @@ var (
 		Name:       "core_account",
 		Columns:    CoreAccountColumns,
 		PrimaryKey: []*schema.Column{CoreAccountColumns[0]},
+		Indexes: []*schema.Index{
+			{
+				Name:    "account_username",
+				Unique:  true,
+				Columns: []*schema.Column{CoreAccountColumns[4]},
+			},
+		},
 	}
 	// BaseSchemasColumns holds the columns for the "base_schemas" table.
 	BaseSchemasColumns = []*schema.Column{
@@ -57,6 +64,13 @@ var (
 		Name:       "core_setting",
 		Columns:    CoreSettingColumns,
 		PrimaryKey: []*schema.Column{CoreSettingColumns[0]},
+		Indexes: []*schema.Index{
+			{
+				Name:    "setting_config_key",
+				Unique:  true,
+				Columns: []*schema.Column{CoreSettingColumns[4]},
+			},
+		},
 	}
 	// CoreTaskColumns holds the columns for the "core_task" table.
 	CoreTaskColumns = []*schema.Column{
@@ -97,6 +111,13 @@ var (
 		Name:       "core_task",
 		Columns:    CoreTaskColumns,
 		PrimaryKey: []*schema.Column{CoreTaskColumns[0]},
+		Indexes: []*schema.Index{
+			{
+				Name:    "task_author_id",
+				Unique:  false,
+				Columns: []*schema.Column{CoreTaskColumns[24]},
+			},
+		},
 	}
 	// CoreTaskDetailColumns holds the columns for the "core_task_detail" table.
 	CoreTaskDetailColumns = []*schema.Column{
@@ -113,6 +134,13 @@ var (
 		Name:       "core_task_detail",
 		Columns:    CoreTaskDetailColumns,
 		PrimaryKey: []*schema.Column{CoreTaskDetailColumns[0]},
+		Indexes: []*schema.Index{
+			{
+				Name:    "taskdetail_task_id",
+				Unique:  false,
+				Columns: []*schema.Column{CoreTaskDetailColumns[4]},
+			},
+		},
 	}
 	// Tables holds all the tables in the schema.
 	Tables = []*schema.Table{

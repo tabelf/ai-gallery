@@ -1,12 +1,12 @@
 package work
 
 import (
+	"ai-gallery/service/internal/dao"
 	"context"
 
 	"ai-gallery/ent"
 	enttask "ai-gallery/ent/task"
 	"ai-gallery/ent/taskdetail"
-	"ai-gallery/service/internal/dao"
 	"ai-gallery/service/internal/svc"
 	"ai-gallery/service/internal/types"
 

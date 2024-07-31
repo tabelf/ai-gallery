@@ -2,7 +2,9 @@ api = "./api/base.api"
 api_output = "./service"
 api_template = ".goctl/1.6.3"
 
-generate_api:
+.PHONY:api sql
+
+api:
 	goctl api go --home ${api_template} --api ${api} --dir ${api_output}
 
 generate_input = "./ent/schema"

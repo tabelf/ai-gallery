@@ -1,6 +1,7 @@
 package task
 
 import (
+	"ai-gallery/service/internal/dao"
 	"bytes"
 	"context"
 	"encoding/base64"
@@ -8,7 +9,6 @@ import (
 	"math"
 	"time"
 
-	"ai-gallery/service/internal/dao"
 	"ai-gallery/service/internal/errors"
 	"ai-gallery/service/internal/logic/basic"
 	u "ai-gallery/service/internal/logic/basic/upload"

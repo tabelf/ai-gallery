@@ -1,10 +1,10 @@
 package basic
 
 import (
+	"ai-gallery/service/internal/dao/setting"
 	"context"
 	"io"
 
-	"ai-gallery/service/internal/dao/setting"
 	"ai-gallery/service/internal/errors"
 	"ai-gallery/service/internal/model"
 )
